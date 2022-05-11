@@ -10,7 +10,7 @@ npm install react-native-input-auto-focus
 
 ## Usage
 
-```python
+```javascript
 import React, { useState, useEffect} from 'react';
 import { TextInput, View } from 'react-native';
 import useAutoFocus from 'react-native-input-auto-focus';
@@ -37,14 +37,15 @@ const Home = () => {
         placeholder="will be third to be focused"
       />
     </View>
-  )};
+  );
+};
 
 export default Home;
 ```
 
 ## Usage with react-navigation
 
-```python
+```javascript
 import React, { useState, useEffect} from 'react';
 import { TextInput, View } from 'react-native';
 import useAutoFocus from 'react-native-input-auto-focus';
@@ -72,7 +73,8 @@ const Home = () => {
         placeholder="will be third to be focused"
       />
     </View>
-  )};
+  )
+};
 
 export default Home;
 ```
