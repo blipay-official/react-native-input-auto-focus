@@ -1,8 +1,32 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { NavigationProp, NavigationState } from '@react-navigation/core';
+import {
+  Dispatch,
+  MutableRefObject,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { TextInput } from 'react-native';
 
-const useAutoFocus = (navigation: NavigationProp<NavigationState, any>) => {
+interface AutoFocusState {
+  /** Blur the current TextInput */
+  blur: () => void;
+  /** List or references */
+  refs: MutableRefObject<never[]>;
+  /** Get TextInput reference by index */
+  getRef: (index: number) => void;
+  /** Focus the current TextInput */
+  focus: (force?: boolean) => void;
+  /** Change focus to the next TextInput */
+  nextFocus: () => void;
+  /** Current TextInput index */
+  currentFocus: number;
+  /** Set current TextInput by index */
+  setCurrentFocus: Dispatch<SetStateAction<number>>;
+}
+
+function useAutoFocus(navigation: any): AutoFocusState {
   const refs = useRef([]);
   const [currentFocus, setCurrentFocus] = useState(0);
   const mounted = useRef(false);
@@ -64,6 +88,6 @@ const useAutoFocus = (navigation: NavigationProp<NavigationState, any>) => {
     setCurrentFocus,
     focus,
   };
-};
+}
 
 export default useAutoFocus;
