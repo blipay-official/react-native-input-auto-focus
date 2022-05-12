@@ -15,7 +15,7 @@ interface AutoFocusState {
   /** List or references */
   refs: MutableRefObject<never[]>;
   /** Get TextInput reference by index */
-  getRef: (index: number) => void;
+  getRef: (index: number) => (el: TextInput | null) => void;
   /** Focus the current TextInput */
   focus: (force?: boolean) => void;
   /** Change focus to the next TextInput */
@@ -26,7 +26,7 @@ interface AutoFocusState {
   setCurrentFocus: Dispatch<SetStateAction<number>>;
 }
 
-function useAutoFocus(navigation: any): AutoFocusState {
+function useAutoFocus(navigation?: any): AutoFocusState {
   const refs = useRef([]);
   const [currentFocus, setCurrentFocus] = useState(0);
   const mounted = useRef(false);
@@ -34,6 +34,17 @@ function useAutoFocus(navigation: any): AutoFocusState {
   const getRef = (index: number) => {
     return (el: TextInput | null) => {
       (refs.current[index] as TextInput | null) = el;
+      if (!mounted.current && el) {
+        if (navigation) {
+          return navigation.addListener('transitionEnd' as any, () => {
+            el.focus();
+            mounted.current = true;
+          });
+        } else {
+          el.focus();
+          mounted.current = true;
+        }
+      }
     };
   };
 
@@ -57,20 +68,6 @@ function useAutoFocus(navigation: any): AutoFocusState {
     },
     [currentFocus, refs],
   );
-
-  useEffect(() => {
-    const firstElement: TextInput = refs.current[0];
-    if (firstElement) {
-      if (navigation) {
-        return navigation.addListener('transitionEnd' as any, () => {
-          firstElement.focus();
-          mounted.current = true;
-        });
-      } else {
-        firstElement.focus();
-      }
-    }
-  }, [refs, navigation]);
 
   useEffect(() => {
     const nextElement: TextInput = refs.current[currentFocus];

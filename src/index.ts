@@ -1,1 +1,3 @@
-export { default as useAutoFocus } from './useAutoFocus';
+import useAutoFocus from './useAutoFocus';
+
+export default useAutoFocus;
