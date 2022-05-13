@@ -34,7 +34,7 @@ function useAutoFocus(navigation?: any): AutoFocusState {
   const getRef = (index: number) => {
     return (el: TextInput | null) => {
       (refs.current[index] as TextInput | null) = el;
-      if (!mounted.current && el) {
+      if (!mounted.current && el && index === 0) {
         if (navigation) {
           return navigation.addListener('transitionEnd' as any, () => {
             el.focus();

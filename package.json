@@ -1,6 +1,6 @@
 {
-  "name": "react-native-expo-interactive-section-list",
-  "version": "1.4.1",
+  "name": "react-native-input-auto-focus",
+  "version": "0.9.0",
   "description": "Auto focus for React Native TextInput",
   "main": "dist/module/index.js",
   "react-native": "dist/module/index.js",
