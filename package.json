@@ -1,6 +1,6 @@
 {
   "name": "react-native-input-auto-focus",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Auto focus for React Native TextInput",
   "main": "dist/module/index.js",
   "react-native": "dist/module/index.js",

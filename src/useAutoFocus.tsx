@@ -11,8 +11,8 @@ import { TextInput } from 'react-native';
 
 export interface AutoFocusProps {
   onPressIn: () => void;
-  ref: () => (el: TextInput | null) => any;
-  inputRef: () => (el: TextInput | null) => any;
+  ref: (el: TextInput | null) => any;
+  inputRef: (el: TextInput | null) => any;
   onSubmitEditing: () => void;
 }
 
@@ -91,8 +91,8 @@ function useAutoFocus(navigation?: any): AutoFocusState {
   const autoFocusProps = useCallback(
     index => ({
       onPressIn: () => setCurrentFocus(index),
-      ref: () => getRef(index),
-      inputRef: () => getRef(index),
+      ref: getRef(index),
+      inputRef: getRef(index),
       onSubmitEditing: nextFocus,
     }),
     [getRef],
