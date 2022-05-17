@@ -9,7 +9,14 @@ import {
 } from 'react';
 import { TextInput } from 'react-native';
 
-interface AutoFocusState {
+export interface AutoFocusProps {
+  onPressIn: () => void;
+  ref: () => (el: TextInput | null) => any;
+  inputRef: () => (el: TextInput | null) => any;
+  onSubmitEditing: () => void;
+}
+
+export interface AutoFocusState {
   /** Blur the current TextInput */
   blur: () => void;
   /** List or references */
@@ -24,6 +31,8 @@ interface AutoFocusState {
   currentFocus: number;
   /** Set current TextInput by index */
   setCurrentFocus: Dispatch<SetStateAction<number>>;
+  /** Returns TextInput props for web like auto focus*/
+  autoFocusProps: (index: number) => AutoFocusProps;
 }
 
 function useAutoFocus(navigation?: any): AutoFocusState {
@@ -31,22 +40,25 @@ function useAutoFocus(navigation?: any): AutoFocusState {
   const [currentFocus, setCurrentFocus] = useState(0);
   const mounted = useRef(false);
 
-  const getRef = (index: number) => {
-    return (el: TextInput | null) => {
-      (refs.current[index] as TextInput | null) = el;
-      if (!mounted.current && el && index === 0) {
-        if (navigation) {
-          return navigation.addListener('transitionEnd' as any, () => {
+  const getRef = useCallback(
+    (index: number) => {
+      return (el: TextInput | null) => {
+        (refs.current[index] as TextInput | null) = el;
+        if (!mounted.current && el && index === 0) {
+          if (navigation) {
+            return navigation.addListener('transitionEnd' as any, () => {
+              el.focus();
+              mounted.current = true;
+            });
+          } else {
             el.focus();
             mounted.current = true;
-          });
-        } else {
-          el.focus();
-          mounted.current = true;
+          }
         }
-      }
-    };
-  };
+      };
+    },
+    [navigation],
+  );
 
   const nextFocus = () => {
     setCurrentFocus(prev => prev + 1);
@@ -76,6 +88,16 @@ function useAutoFocus(navigation?: any): AutoFocusState {
     }
   }, [currentFocus]);
 
+  const autoFocusProps = useCallback(
+    index => ({
+      onPressIn: () => setCurrentFocus(index),
+      ref: () => getRef(index),
+      inputRef: () => getRef(index),
+      onSubmitEditing: nextFocus,
+    }),
+    [getRef],
+  );
+
   return {
     refs,
     getRef,
@@ -84,6 +106,7 @@ function useAutoFocus(navigation?: any): AutoFocusState {
     blur,
     setCurrentFocus,
     focus,
+    autoFocusProps,
   };
 }
 
