@@ -179,8 +179,6 @@ The `onPressIn` handler keeps `currentFocus` in sync when the user taps an input
 
 ### `AutoFocusProps`
 
-The object returned by `autoFocusProps(index)`:
-
 ```typescript
 interface AutoFocusProps {
   ref: (el: TextInput | null) => void;
@@ -216,8 +214,12 @@ If your custom input component forwards refs to the underlying TextInput, `getRe
 ```tsx
 const { getRef, nextFocus } = useAutoFocus();
 
-<CustomInput ref={getRef(0)} onSubmitEditing={nextFocus} />
-<CustomInput ref={getRef(1)} onSubmitEditing={nextFocus} />
+return (
+  <View>
+      <CustomInput ref={getRef(0)} onSubmitEditing={nextFocus} />
+      <CustomInput ref={getRef(1)} onSubmitEditing={nextFocus} />
+  </View>
+)
 ```
 
 If your component uses a prop like `inputRef` instead of `ref`, use `autoFocusProps` which provides both:
@@ -225,7 +227,9 @@ If your component uses a prop like `inputRef` instead of `ref`, use `autoFocusPr
 ```tsx
 const { autoFocusProps } = useAutoFocus();
 
-<CustomInput {...autoFocusProps(0)} />
+return (
+  <CustomInput {...autoFocusProps(0)} />
+)
 ```
 
 ## License
