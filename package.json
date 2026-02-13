@@ -10,7 +10,7 @@
     "dist"
   ],
   "scripts": {
-    "lint": "tsc --noEmit && eslint --ext .js,.jsx,.ts,.tsx ./",
+    "lint": "tsc --noEmit && eslint ./",
     "prepare": "bob build",
     "test": "jest",
     "test:watch": "jest --watchAll",
@@ -28,6 +28,7 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.29.0",
+    "@eslint/compat": "^2.0.2",
     "@react-native-community/bob": "^0.17.1",
     "@react-native-community/eslint-config": "^3.2.0",
     "@react-navigation/native": "^7.1.28",
