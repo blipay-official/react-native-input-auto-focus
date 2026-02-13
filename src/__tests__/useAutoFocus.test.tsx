@@ -219,4 +219,15 @@ describe('useAutoFocus', () => {
 
     expect(currentFocus).toBe(0);
   });
+
+  it('should return autoFocusProps', () => {
+    const { result } = renderHook(() => useAutoFocus());
+    const { autoFocusProps } = result.current;
+    const props = autoFocusProps(0);
+
+    expect(props).toHaveProperty('onPressIn');
+    expect(props).toHaveProperty('ref');
+    expect(props).toHaveProperty('inputRef');
+    expect(props).toHaveProperty('onSubmitEditing');
+  });
 });

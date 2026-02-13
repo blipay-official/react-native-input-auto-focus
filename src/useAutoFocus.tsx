@@ -89,7 +89,7 @@ function useAutoFocus(navigation?: any): AutoFocusState {
   }, [currentFocus]);
 
   const autoFocusProps = useCallback(
-    index => ({
+    (index: number) => ({
       onPressIn: () => setCurrentFocus(index),
       ref: getRef(index),
       inputRef: getRef(index),
