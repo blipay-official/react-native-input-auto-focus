@@ -49,8 +49,8 @@
     "typescript": "~5.9.3"
   },
   "peerDependencies": {
-    "react": "19.1.0",
-    "react-native": "0.81.5"
+    "react": ">=17.0.2",
+    "react-native": ">=0.67.1"
   },
   "@react-native-community/bob": {
     "source": "src",
